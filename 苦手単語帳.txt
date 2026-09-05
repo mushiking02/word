@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苦手単語帳</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 10px; background: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h2 { margin-top: 0; color: #333; }
+        input, select, button { padding: 10px; margin: 5px 0; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; }
+        button { background: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background: #45a049; }
+        .tab-btn { background: #ddd; color: #333; }
+        .tab-btn.active { background: #2196F3; color: white; }
+        .word-list { list-style: none; padding: 0; }
+        .word-item { display: flex; justify-content: space-between; padding: 8px; border-bottom: 1px solid #eee; }
+        .badge { font-size: 12px; padding: 2px 6px; border-radius: 4px; color: white; }
+        .badge-word { background: #ff9800; }
+        .badge-idiom { background: #9c27b0; }
+        .hidden { display: none; }
+        .quiz-option { display: block; width: 100%; margin: 8px 0; text-align: left; background: #f0f0f0; color: #333; }
+    </style>
+</head>
+<body>
+
+    <h1>📖 苦手単語帳</h1>
+
+    <div>
+        <button class="tab-btn active" onclick="showSection('register')">登録・一覧</button>
+        <button class="tab-btn" onclick="startQuiz()">10問クイズ</button>
+    </div>
+
+    <div id="register-section" class="card">
+        <h2>新しい語句を登録</h2>
+        <form id="add-form">
+            <input type="text" id="term" placeholder="英単語・熟語 (例: apple)" required style="width: 95%;">
+            <input type="text" id="meaning" placeholder="意味 (例: りんご)" required style="width: 95%;">
+            <select id="type">
+                <option value="word">単語</option>
+                <option value="idiom">熟語</option>
+            </select>
+            <button type="submit">登録する</button>
+        </form>
+
+        <h2>登録リスト (<span id="total-count">0</span>件)</h2>
+        <ul id="word-list" class="word-list"></ul>
+    </div>
+
+    <div id="quiz-section" class="card hidden">
+        <h2>10問クイズ (<span id="quiz-progress">0</span>/10)</h2>
+        <div id="quiz-content">
+            <p>種別: <span id="quiz-type" class="badge">
